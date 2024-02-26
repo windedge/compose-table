@@ -62,7 +62,7 @@ import io.github.windedge.table.rememberPaginationState
 val data = List(50) {
     mapOf("Column 1" to "Item $it", "Column 2" to "Item $it", "Column 3" to "Item $it")
 }
-val paginationState = rememberPaginationState(data.size, initialPageSize = 5)
+val paginationState = rememberPaginationState(data.size, pageSize = 5)
 
 PaginatedDataTable(
     columns = {
@@ -75,7 +75,7 @@ PaginatedDataTable(
     },
     paginationState = paginationState,
     onPageChanged = {
-        data.chunked(it.pageSize)[it.pageIndex]
+        data.chunked(it.pageSize)[it.pageIndex - 1]
     }
 ) { item: Map<String, String> ->
     row(modifier = Modifier) {
