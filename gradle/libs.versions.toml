@@ -1,0 +1,18 @@
+[versions]
+kotlin = "1.9.22"
+coroutine = "1.7.3"
+compose = "1.5.12"
+buildconfig = "4.1.1"
+android-library = "8.2.0"
+maven-publish = "0.25.2"
+
+[libraries]
+coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
+
+[plugins]
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+android-library = { id = "com.android.library", version.ref = "android-library" }
