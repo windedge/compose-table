@@ -86,7 +86,7 @@ class PaginationState(totalCount: Int, pageIndex: Int, pageSize: Int) {
 
     companion object {
         val Saver: Saver<PaginationState, *> = listSaver(
-            save = { listOf(it.totalCount, it.pageSize, it.pageIndex) },
+            save = { listOf(it.totalCount, it.pageIndex, it.pageSize) },
             restore = {
                 PaginationState(it[0], it[1], it[2])
             }
@@ -107,4 +107,3 @@ fun rememberPaginationState(
     LaunchedEffect(state.pageIndex) { pageIndex = state.pageIndex }
     return state
 }
-
