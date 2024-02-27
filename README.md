@@ -14,7 +14,17 @@ This is a `Compose Multiplatform` table library that supports both Material and 
 
 ## Usage
 
-### Dependency
+### Setup
+
+Add the MavenCentral repository to your build file
+```kotlin
+repositories {
+    ...
+    mavenCentral()
+}
+```
+
+Add dependency
 
 ```kotlin
 implemention("io.github.windedge.table:table:<version>")
