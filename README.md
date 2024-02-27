@@ -66,7 +66,7 @@ DataTable(
 
 ```kotlin
 import androidx.compose.material3.Text
-import io.github.windedge.table.BasePaginatedDataTable
+import io.github.windedge.table.material3.PaginatedDataTable
 import io.github.windedge.table.rememberPaginationState
 
 val data = List(50) {
