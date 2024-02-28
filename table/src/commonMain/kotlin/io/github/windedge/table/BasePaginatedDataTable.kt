@@ -64,16 +64,18 @@ class PaginationState(totalCount: Int, pageIndex: Int, pageSize: Int) {
 
     val pageCount: Int get() = (totalCount + pageSize - 1) / pageSize
 
+    fun ensurePageCountPositive(): Int = if (pageCount < 1) 1 else pageCount
+
     fun next() {
-        pageIndex = (pageIndex + 1).coerceIn(1, pageCount)
+        pageIndex = (pageIndex + 1).coerceIn(1, ensurePageCountPositive())
     }
 
     fun previous() {
-        pageIndex = (pageIndex - 1).coerceIn(1, pageCount)
+        pageIndex = (pageIndex - 1).coerceIn(1, ensurePageCountPositive())
     }
 
     fun goto(index: Int) {
-        pageIndex = index.coerceIn(1, pageCount)
+        pageIndex = index.coerceIn(1, ensurePageCountPositive())
     }
 
     fun changeTotalCount(count: Int) {
@@ -102,7 +104,7 @@ fun rememberPaginationState(
 ): PaginationState {
     var pageIndex by remember { mutableStateOf(initialPageIndex) }
     val state = rememberSaveable(initialTotalCount, initialPageIndex, pageSize, saver = PaginationState.Saver) {
-        PaginationState(initialTotalCount, pageIndex, pageSize)
+        PaginationState(initialTotalCount, pageIndex, pageSize).apply { goto(this.pageIndex) }
     }
     LaunchedEffect(state.pageIndex) { pageIndex = state.pageIndex }
     return state
