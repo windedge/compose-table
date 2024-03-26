@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.github.windedge.table.PaginationState
+import kotlin.math.min
 
 @Composable
 fun Paginator(
@@ -28,7 +29,7 @@ fun Paginator(
         val totalCount = paginationState.totalCount
         val pageSize = paginationState.pageSize
 
-        val start = (pageIndex - 1) * pageSize + 1
+        val start = min((pageIndex - 1) * pageSize + 1, totalCount)
         val end = (start + pageSize - 1).coerceAtMost(totalCount)
 
         Text("$start-$end of $totalCount")
