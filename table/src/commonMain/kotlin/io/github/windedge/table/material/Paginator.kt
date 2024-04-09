@@ -5,16 +5,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.FirstPage
-import androidx.compose.material.icons.filled.LastPage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import compose_table.table.generated.resources.*
 import io.github.windedge.table.PaginationState
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Paginator(
     paginationState: PaginationState,
@@ -33,16 +32,16 @@ fun Paginator(
 
         Text("$start-$end of $totalCount")
         IconButton(onClick = { paginationState.goto(1) }, enabled = pageIndex > 1) {
-            Icon(Icons.Default.FirstPage, "First")
+            Icon(painterResource(Res.drawable.skip_left), "First")
         }
         IconButton(onClick = { paginationState.previous() }, enabled = pageIndex > 1) {
-            Icon(Icons.Default.ChevronLeft, "Previous")
+            Icon(painterResource(Res.drawable.arrow_left), "Previous")
         }
         IconButton(onClick = { paginationState.next() }, enabled = pageIndex < pageCount) {
-            Icon(Icons.Default.ChevronRight, "Next")
+            Icon(painterResource(Res.drawable.arrow_right), "Next")
         }
         IconButton(onClick = { paginationState.goto(pageCount) }, enabled = pageIndex < pageCount) {
-            Icon(Icons.Default.LastPage, "Last")
+            Icon(painterResource(Res.drawable.skip_right), "Last")
         }
     }
 }

@@ -9,9 +9,7 @@ plugins {
 kotlin {
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
+            kotlinOptions { jvmTarget = "17" }
         }
     }
 
@@ -32,7 +30,6 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
