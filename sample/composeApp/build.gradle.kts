@@ -34,6 +34,7 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation("io.github.windedge.table:table:<version>")
+            implementation("io.github.windedge.table:table-m3:<version>")
         }
 
         commonTest.dependencies {

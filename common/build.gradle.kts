@@ -27,8 +27,6 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.components.resources)
-                implementation(compose.material)
-                implementation(compose.material3)
             }
         }
 
@@ -40,15 +38,7 @@ kotlin {
     }
 }
 
-android {
-    compileSdk = 33
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 21
-    }
-    compileOptions {
-        this.sourceCompatibility = JavaVersion.VERSION_11
-        this.targetCompatibility = JavaVersion.VERSION_11
-    }
-    namespace = "io.github.windedge.table"
+compose.resources {
+    packageOfResClass = "io.github.windedge.table.res"
+    publicResClass = true
 }

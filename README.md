@@ -27,7 +27,9 @@ repositories {
 Add dependency
 
 ```kotlin
-implemention("io.github.windedge.table:table:<version>")
+implementation("io.github.windedge.table:table-m2:<version>")
+// or
+implementation("io.github.windedge.table:table-m3:<version>")
 ```
 
 ### Static Data Table
@@ -66,7 +68,7 @@ DataTable(
 
 ```kotlin
 import androidx.compose.material3.Text
-import io.github.windedge.table.material3.PaginatedDataTable
+import io.github.windedge.table.m3.PaginatedDataTable
 import io.github.windedge.table.rememberPaginationState
 
 val data = List(50) {

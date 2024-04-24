@@ -1,11 +1,8 @@
 package compose.table.demo
 
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -14,14 +11,8 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import compose.table.demo.theme.AppTheme
-import compose.table.demo.theme.LocalThemeIsDark
-import io.github.windedge.table.material3.PaginatedDataTable
+import io.github.windedge.table.m3.PaginatedDataTable
 import io.github.windedge.table.rememberPaginationState
 
 data class User(val id: Int, val name: String, val email: String, val age: Int?)
@@ -50,9 +41,11 @@ fun App() {
             val selectedIds = remember { mutableStateListOf<Int>() }
             val paginationState = rememberPaginationState(users.size, pageSize = 5)
 
+
             Button(onClick = { users.add(randomUser(users.size)) }) {
                 Text("Add User")
             }
+
             PaginatedDataTable(
                 columns = {
                     headerBackground {

@@ -9,7 +9,9 @@ pluginManagement {
 }
 
 include(
-    ":table",
+    ":common",
+    ":m2",
+    ":m3",
 )
 
 rootProject.name = "compose-table"

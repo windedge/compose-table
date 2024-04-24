@@ -1,18 +1,12 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import io.github.windedge.table.DataTable
-import io.github.windedge.table.BasePaginatedDataTable
-import io.github.windedge.table.material.PaginatedDataTable
-import io.github.windedge.table.material3.Paginator
+import io.github.windedge.table.m3.PaginatedDataTable
 import io.github.windedge.table.rememberPaginationState
 
 @Preview

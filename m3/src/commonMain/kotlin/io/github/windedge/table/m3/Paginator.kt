@@ -1,17 +1,19 @@
-package io.github.windedge.table.material
+package io.github.windedge.table.m3
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import compose_table.table.generated.resources.*
 import io.github.windedge.table.PaginationState
+import io.github.windedge.table.res.Res
+import io.github.windedge.table.res.*
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import kotlin.math.min
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -27,7 +29,7 @@ fun Paginator(
         val totalCount = paginationState.totalCount
         val pageSize = paginationState.pageSize
 
-        val start = (pageIndex - 1) * pageSize + 1
+        val start = min((pageIndex - 1) * pageSize + 1, totalCount)
         val end = (start + pageSize - 1).coerceAtMost(totalCount)
 
         Text("$start-$end of $totalCount")

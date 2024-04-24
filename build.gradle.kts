@@ -1,4 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
 import com.github.gmazzo.gradle.plugins.BuildConfigExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 
 
@@ -24,6 +26,19 @@ subprojects {
         google()
     }
 
+    /*
+            extensions.configure<SourceSetContainer> {
+                getByName("main").java.srcDirs("src/main/kotlin/")
+                getByName("test").java.srcDirs("src/test/kotlin/")
+            }
+    */
+
+    /*
+            extensions.configure<MavenPublishBaseExtension> {
+                publishToMavenCentral(SonatypeHost.S01)
+            }
+    */
+
     afterEvaluate {
 
         extensions.findByType<BuildConfigExtension>()?.apply {
@@ -37,6 +52,7 @@ subprojects {
             buildConfigField("String", "currentVersion", "\"$currentVersion\"")
         }
 
+
         extensions.configure<JavaPluginExtension> {
             sourceCompatibility = JavaVersion.VERSION_11
             targetCompatibility = JavaVersion.VERSION_11
@@ -46,18 +62,19 @@ subprojects {
             jvmToolchain(11)
         }
 
-        /*
-                extensions.configure<SourceSetContainer> {
-                    getByName("main").java.srcDirs("src/main/kotlin/")
-                    getByName("test").java.srcDirs("src/test/kotlin/")
-                }
-        */
+        extensions.configure<LibraryExtension> {
+            compileSdk = 33
+            sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            defaultConfig {
+                minSdk = 21
+            }
+            compileOptions {
+                this.sourceCompatibility = JavaVersion.VERSION_11
+                this.targetCompatibility = JavaVersion.VERSION_11
+            }
+            namespace = "io.github.windedge.table"
+        }
 
-        /*
-                extensions.configure<MavenPublishBaseExtension> {
-                    publishToMavenCentral(SonatypeHost.S01)
-                }
-        */
 
     }
 }

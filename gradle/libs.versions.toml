@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.9.23"
-coroutine = "1.7.3"
-compose = "1.6.1"
+coroutine = "1.8.0"
+compose = "1.6.10-beta01"
 buildconfig = "4.1.1"
 android-library = "8.2.0"
 maven-publish = "0.25.2"

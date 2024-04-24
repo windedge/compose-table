@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun <T> BasePaginatedDataTable(
+fun <T> BasicPaginatedDataTable(
     columns: ColumnBuilder.() -> Unit,
     paginationState: PaginationState,
     onPageChanged: suspend (PaginationState) -> List<T>,

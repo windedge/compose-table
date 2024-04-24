@@ -1,4 +1,4 @@
-package io.github.windedge.table.material
+package io.github.windedge.table.m2
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -6,11 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.github.windedge.table.BasePaginatedDataTable
+import io.github.windedge.table.BasicPaginatedDataTable
 import io.github.windedge.table.ColumnBuilder
 import io.github.windedge.table.PaginationRowBuilder
 import io.github.windedge.table.PaginationState
 import io.github.windedge.table.components.Divider
+import io.github.windedge.table.material.Paginator
 
 @Composable
 fun <T> PaginatedDataTable(
@@ -25,5 +26,5 @@ fun <T> PaginatedDataTable(
     },
     eachRow: PaginationRowBuilder.(T) -> Unit
 ) {
-    BasePaginatedDataTable(columns, paginationState, onPageChanged, modifier, cellPadding, divider, footer, eachRow)
+    BasicPaginatedDataTable(columns, paginationState, onPageChanged, modifier, cellPadding, divider, footer, eachRow)
 }
