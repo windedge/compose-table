@@ -9,7 +9,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import io.github.windedge.table.components.Divider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
 @Composable
@@ -17,6 +19,7 @@ fun <T> BasicPaginatedDataTable(
     columns: ColumnBuilder.() -> Unit,
     paginationState: PaginationState,
     onPageChanged: suspend (PaginationState) -> List<T>,
+    context: CoroutineContext = Dispatchers.Default,
     modifier: Modifier = Modifier,
     cellPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 5.dp),
     divider: @Composable ((rowIndex: Int) -> Unit)? = @Composable { Divider() },
@@ -25,7 +28,7 @@ fun <T> BasicPaginatedDataTable(
 ) {
     val recordList = remember { mutableStateListOf<T>() }
     LaunchedEffect(paginationState.totalCount, paginationState.pageSize, paginationState.pageIndex) {
-        launch {
+        launch(context) {
             onPageChanged(paginationState).let {
                 recordList.clear()
                 recordList.addAll(it)

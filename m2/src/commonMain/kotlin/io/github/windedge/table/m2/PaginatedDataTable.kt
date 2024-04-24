@@ -12,12 +12,15 @@ import io.github.windedge.table.PaginationRowBuilder
 import io.github.windedge.table.PaginationState
 import io.github.windedge.table.components.Divider
 import io.github.windedge.table.material.Paginator
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
 @Composable
 fun <T> PaginatedDataTable(
     columns: ColumnBuilder.() -> Unit,
     paginationState: PaginationState,
     onPageChanged: suspend (PaginationState) -> List<T>,
+    context: CoroutineContext = Dispatchers.Default,
     modifier: Modifier = Modifier,
     cellPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 5.dp),
     divider: @Composable ((rowIndex: Int) -> Unit)? = @Composable { Divider() },
@@ -26,5 +29,5 @@ fun <T> PaginatedDataTable(
     },
     eachRow: PaginationRowBuilder.(T) -> Unit
 ) {
-    BasicPaginatedDataTable(columns, paginationState, onPageChanged, modifier, cellPadding, divider, footer, eachRow)
+    BasicPaginatedDataTable(columns, paginationState, onPageChanged, context, modifier, cellPadding, divider, footer, eachRow)
 }
