@@ -27,7 +27,7 @@ repositories {
 Add dependency
 
 ```kotlin
-implemention("io.github.windedge.table:table:<version>")
+implementation("io.github.windedge.table:table:<version>")
 ```
 
 ### Static Data Table
