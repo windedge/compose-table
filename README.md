@@ -100,6 +100,10 @@ PaginatedDataTable(
 
 Please check the [sample app](./sample) for a more detailed showcase.
 
+## Known Issues
+
+Since the Compose Resources is relatively new and still under development, a bug in the WASM platform is causing the paginator icons to fail to load as expected.
+
 ## Credits
 
 This project is inspired by [compose-data-table](https://github.com/sproctor/compose-data-table).
