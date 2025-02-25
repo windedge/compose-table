@@ -54,12 +54,12 @@ subprojects {
 
 
         extensions.configure<JavaPluginExtension> {
-            sourceCompatibility = JavaVersion.VERSION_11
-            targetCompatibility = JavaVersion.VERSION_11
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
         }
 
         extensions.configure<KotlinProjectExtension> {
-            jvmToolchain(11)
+            jvmToolchain(17)
         }
 
         extensions.configure<LibraryExtension> {
@@ -69,8 +69,8 @@ subprojects {
                 minSdk = 21
             }
             compileOptions {
-                this.sourceCompatibility = JavaVersion.VERSION_11
-                this.targetCompatibility = JavaVersion.VERSION_11
+                this.sourceCompatibility = JavaVersion.VERSION_17
+                this.targetCompatibility = JavaVersion.VERSION_17
             }
             namespace = "io.github.windedge.table"
         }
