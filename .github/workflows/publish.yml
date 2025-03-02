@@ -3,7 +3,7 @@ name: Publish to Maven Central
 on:
   workflow_dispatch:  # Manual trigger
   release:
-    types: [created]  # Trigger when a new release is created
+    types: [published]
 
 jobs:
   publish:
