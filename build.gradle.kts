@@ -2,6 +2,7 @@ import com.android.build.api.dsl.LibraryExtension
 import com.github.gmazzo.gradle.plugins.BuildConfigExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
 
 
 plugins {
@@ -26,18 +27,28 @@ subprojects {
         google()
     }
 
-    /*
-            extensions.configure<SourceSetContainer> {
-                getByName("main").java.srcDirs("src/main/kotlin/")
-                getByName("test").java.srcDirs("src/test/kotlin/")
-            }
-    */
+    plugins.withType<KotlinBasePlugin> {
+        extensions.configure<KotlinMultiplatformExtension> {
+            jvmToolchain(17)
 
-    /*
-            extensions.configure<MavenPublishBaseExtension> {
-                publishToMavenCentral(SonatypeHost.S01)
+            jvm()
+
+            plugins.withId("com.android.library") {
+                androidTarget {
+                    publishLibraryVariants("release")
+                }
             }
-    */
+
+            iosArm64()
+            iosX64()
+            iosSimulatorArm64()
+
+            js {
+                browser()
+                binaries.executable()
+            }
+        }
+    }
 
     afterEvaluate {
 
@@ -56,10 +67,6 @@ subprojects {
         extensions.configure<JavaPluginExtension> {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
-        }
-
-        extensions.configure<KotlinProjectExtension> {
-            jvmToolchain(17)
         }
 
         extensions.configure<LibraryExtension> {
