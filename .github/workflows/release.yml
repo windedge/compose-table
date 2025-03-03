@@ -43,6 +43,8 @@ jobs:
             Release version ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}  # Use a personal access token instead of the default token
           
       # - name: Update to next development version
       #   run: |
