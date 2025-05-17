@@ -1,20 +1,23 @@
 [versions]
 
-kotlin = "1.9.23"
-compose = "1.6.10-beta01"
+kotlin = "2.1.21"
+compose = "1.8.0"
 agp = "8.0.2"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.1"
-compose-uitooling = "1.5.4"
+compose-uitooling = "1.8.1"
+compose-icons-core = "1.7.3"
 
 [libraries]
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
+compose-material-icons-core = {module = "org.jetbrains.compose.material:material-icons-core", version.ref="compose-icons-core"}
 
 [plugins]
 
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compiler-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,7 +1,7 @@
 [versions]
-kotlin = "1.9.23"
+kotlin = "2.1.21"
 coroutine = "1.8.0"
-compose = "1.6.11"
+compose = "1.8.0"
 buildconfig = "4.1.1"
 android-library = "8.0.2"
 maven-publish = "0.25.2"
@@ -14,5 +14,6 @@ maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publ
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compiler-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
 android-library = { id = "com.android.library", version.ref = "android-library" }

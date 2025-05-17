@@ -1,8 +1,11 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compiler.compose)
     alias(libs.plugins.android.application)
 }
 
@@ -15,8 +18,21 @@ kotlin {
 
     jvm()
 
-    js {
-        browser()
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        outputModuleName = "composeApp"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(project.rootDir.path)
+                        add(project.projectDir.path)
+                    }
+                }
+            }
+        }
         binaries.executable()
     }
 
@@ -32,6 +48,7 @@ kotlin {
             implementation(compose.material3)
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(libs.compose.material.icons.core)
 
             implementation("io.github.windedge.table:table:<version>")
             implementation("io.github.windedge.table:table-m3:<version>")
@@ -52,10 +69,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
         }
 
-        jsMain.dependencies {
-            implementation(compose.html.core)
-        }
-
+        val wasmJsMain by getting
     }
 }
 
@@ -80,12 +94,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
-    }
 }
 
 compose.desktop {
@@ -100,6 +108,3 @@ compose.desktop {
     }
 }
 
-compose.experimental {
-    web.application {}
-}

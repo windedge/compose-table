@@ -1,7 +1,7 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.github.gmazzo.gradle.plugins.BuildConfigExtension
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinBasePlugin
 
 
@@ -9,8 +9,9 @@ plugins {
     alias(libs.plugins.kotlin.kmp) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.maven.publish) apply false
-    alias(libs.plugins.buildconfig) apply false
     alias(libs.plugins.compose) apply false
+    alias(libs.plugins.compiler.compose) apply false
+    alias(libs.plugins.buildconfig) apply false
 }
 
 val groupId = properties["GROUP"].toString()
@@ -43,9 +44,9 @@ subprojects {
             iosX64()
             iosSimulatorArm64()
 
-            js {
+            @OptIn(ExperimentalWasmDsl::class)
+            wasmJs {
                 browser()
-                binaries.executable()
             }
         }
     }

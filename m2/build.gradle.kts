@@ -2,6 +2,7 @@ plugins {
     id(libs.plugins.kotlin.kmp.get().pluginId)
     id(libs.plugins.android.library.get().pluginId)
     id(libs.plugins.compose.get().pluginId)
+    id(libs.plugins.compiler.compose.get().pluginId)
     id(libs.plugins.maven.publish.get().pluginId)
 }
 

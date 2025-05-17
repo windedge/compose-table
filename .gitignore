@@ -48,3 +48,6 @@ Pods/
 *.jks
 *yarn.lock
 *local.properties
+
+.kotlin
+.aider*
