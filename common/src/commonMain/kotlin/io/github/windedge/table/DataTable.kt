@@ -61,6 +61,7 @@ fun DataTable(
         val scale = when {
             constraints.maxWidth == Constraints.Infinity -> 1f           // add this to avoid infinite width in parent scrolling
             totalWidth < constraints.maxWidth -> constraints.maxWidth.toFloat() / totalWidth
+            totalWidth > constraints.maxWidth -> constraints.maxWidth.toFloat() / totalWidth
             else -> 1f
         }
 
