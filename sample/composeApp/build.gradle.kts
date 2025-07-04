@@ -36,6 +36,22 @@ kotlin {
         binaries.executable()
     }
 
+    js {
+        browser {
+            outputModuleName = "composeApp"
+            commonWebpackConfig {
+                showProgress = true
+            }
+            runTask {
+                mainOutputFileName = "composeApp.js"
+            }
+            webpackTask {
+                mainOutputFileName = "composeApp.js"
+            }
+            binaries.executable()
+        }
+    }
+
     sourceSets {
         all {
             languageSettings {

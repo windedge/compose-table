@@ -11,6 +11,7 @@ This is a `Compose Multiplatform` table library that supports both Material and 
 * Desktop
 * iOS
 * WasmJS
+* JS
 
 ## Usage
 
