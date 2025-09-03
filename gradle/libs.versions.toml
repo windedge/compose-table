@@ -4,7 +4,7 @@ coroutine = "1.8.0"
 compose = "1.8.0"
 buildconfig = "4.1.1"
 android-library = "8.0.2"
-maven-publish = "0.25.2"
+maven-publish = "0.34.0"
 
 [libraries]
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
