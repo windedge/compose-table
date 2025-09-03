@@ -48,6 +48,15 @@ subprojects {
             wasmJs {
                 browser()
             }
+            js {
+                browser {
+                    commonWebpackConfig {
+                        showProgress = true
+                    }
+                }
+                binaries.library()
+                generateTypeScriptDefinitions()
+            }
         }
     }
 
