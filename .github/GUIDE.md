@@ -43,7 +43,7 @@ The publishing workflow for this project runs on the `macOS-latest` runner to su
 3. After creating the Release, the `publish.yml` workflow will be automatically triggered, which will:
    - Build the project (including the iOS platform)
    - Sign the build artifacts using GPG
-   - Publish all artifacts to Maven Central using the `com.vanniktech.maven.publish` plugin
+   - Publish all artifacts to Maven Central using the `com.vanniktech.maven.publish` plugin 0.34.0 via the `publishToMavenCentral` task
 
 ### Manual Publishing
 
@@ -57,6 +57,6 @@ The publishing workflow for this project runs on the `macOS-latest` runner to su
 
 - Ensure that the version number in `gradle.properties` is correctly formatted (if it's a snapshot version, it should end with `-SNAPSHOT`)
 - Test your library before publishing to ensure quality
-- Check the Sonatype repository to verify that the publishing was successful
+- Check the Maven Central Portal to verify that the publishing was successful
 - Building for the iOS platform requires a macOS environment and Xcode tools, which is why we use the macOS runner in GitHub Actions
 - The `com.vanniktech.maven.publish` plugin automatically handles most of the Maven Central publishing process, including signing and uploading

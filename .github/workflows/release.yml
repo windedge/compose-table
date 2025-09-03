@@ -15,26 +15,26 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Fetch full history to support version calculation
-          
+
       - name: Get tag version
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-        
+
       - name: Update version in gradle.properties
         run: |
           # Ensure we have the latest code
           git fetch origin
           git checkout main
-          
+
           # Update version number
           sed -i '' "s/VERSION_NAME=.*/VERSION_NAME=${{ steps.get_version.outputs.VERSION }}/" gradle.properties
-          
+
           # Commit and push changes
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Update version to ${{ steps.get_version.outputs.VERSION }}" -a || echo "No changes to commit"
           git push origin HEAD:main
-          
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -45,7 +45,7 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}  # Use a personal access token instead of the default token
-          
+
       # - name: Update to next development version
       #   run: |
       #     # Calculate next version number
@@ -54,10 +54,10 @@ jobs:
       #     IFS='.' read -r -a VERSION_PARTS <<< "$CURRENT_VERSION"
       #     PATCH=$((VERSION_PARTS[2] + 1))
       #     NEXT_VERSION="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.$PATCH-SNAPSHOT"
-          
+
       #     # Update to next development version
       #     sed -i '' "s/VERSION_NAME=.*/VERSION_NAME=$NEXT_VERSION/" gradle.properties
-          
+
       #     # Commit and push changes
       #     git config --local user.email "action@github.com"
       #     git config --local user.name "GitHub Action"
