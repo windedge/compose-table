@@ -82,6 +82,8 @@ fun App() {
                     selectedIds.clear()
                     users.chunked(it.pageSize)[(it.pageIndex - 1)]
                 },
+                minTableWidth = 960.dp,
+                scrollable = true,
             ) { user ->
                 val checked = selectedIds.contains(user.id)
                 row(modifier = Modifier.toggleable(checked, onValueChange = {

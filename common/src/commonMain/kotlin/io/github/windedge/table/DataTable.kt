@@ -1,13 +1,25 @@
 package io.github.windedge.table
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isFinite
 import io.github.windedge.table.components.Divider
 import kotlin.math.max
 
@@ -18,6 +30,8 @@ fun DataTable(
     cellPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 5.dp),
     divider: @Composable ((rowIndex: Int) -> Unit)? = @Composable { Divider() },
     footer: @Composable (BoxScope.() -> Unit)? = null,
+    minTableWidth: Dp = 0.dp,
+    scrollable: Boolean = false,
     rowsContent: RowsBuilder.() -> Unit
 ) {
     val columnBuilder = ColumnBuilderImpl().apply { columns() }
@@ -39,7 +53,8 @@ fun DataTable(
         rows.forEach { Box(modifier = it.modifier.then(Modifier.fillMaxSize())) }
     }
 
-    SubcomposeLayout(modifier = modifier) { constraints ->
+    val tableContent: @Composable (Modifier) -> Unit = { layoutModifier ->
+        SubcomposeLayout(modifier = layoutModifier) { constraints ->
         // Combine subcompose calls for headers and cells
         val contentPlaceables = subcompose("content", content = contentComposable)
 
@@ -86,23 +101,38 @@ fun DataTable(
         val tableWidth = scaledColumnWidths.sum()
 
         val headerBackground = subcompose("headerDecoration", columnBuilder.headerBackground).firstOrNull()
-            ?.measure(constraints.copy(maxWidth = tableWidth, maxHeight = headerHeight))
+            // Here, we cannot directly reuse the original constraints' minWidth, otherwise it will trigger
+            // an "maxWidth must be >= than minWidth" IllegalArgumentException when tableWidth < original minWidth.
+            ?.measure(constraints.copy(minWidth = 0, maxWidth = tableWidth, maxHeight = headerHeight))
 
         val rowBackgrounds = subcompose("rowBackgrounds", backgroundComposables).mapIndexed { index, measurable ->
-            measurable.measure(constraints.copy(maxWidth = tableWidth, maxHeight = rowHeights[index + 1]))
+            measurable.measure(
+                constraints.copy(
+                    minWidth = 0,
+                    maxWidth = tableWidth,
+                    maxHeight = rowHeights[index + 1]
+                )
+            )
         }
 
         val dividerPlacables = subcompose("dividers") {
             repeat(rows.size + 1) { divider?.invoke(it) } // dividers = header + rows
         }.mapIndexed { rowIndex, mesurable ->
-            mesurable.measure(constraints.copy(maxWidth = tableWidth, maxHeight = rowHeights[rowIndex]))
+            mesurable.measure(
+                constraints.copy(
+                    minWidth = 0,
+                    maxWidth = tableWidth,
+                    maxHeight = rowHeights[rowIndex]
+                )
+            )
         }
         val dividierHeights = dividerPlacables.map { it.height }
 
         val footerPlaceable = footer?.let {
             val footerComposable = @Composable { Box(modifier = Modifier.padding(cellPadding)) { it() } }
             subcompose("footer", footerComposable).firstOrNull()
-                ?.measure(constraints.copy(minWidth = tableWidth, maxWidth = tableWidth))
+                // The footer should not rely on the original constraints.minWidth, directly using tableWidth as the width interval.
+                ?.measure(constraints.copy(minWidth = 0, maxWidth = tableWidth))
         }
         val footerHeight = footerPlaceable?.height ?: 0
 
@@ -146,6 +176,39 @@ fun DataTable(
             }
 
             footerPlaceable?.place(0, yPosition)
+        }
+        }
+    }
+
+    val coercedMinTableWidth = minTableWidth.coerceAtLeast(0.dp)
+
+    BoxWithConstraints(modifier = modifier) {
+        val targetWidth = when {
+            maxWidth.isFinite -> maxWidth.coerceAtLeast(coercedMinTableWidth)
+            coercedMinTableWidth > 0.dp -> coercedMinTableWidth
+            else -> null
+        }
+
+        val widthModifier = targetWidth?.let { Modifier.requiredWidth(it) } ?: Modifier
+
+        if (scrollable) {
+            val scrollState = rememberScrollState()
+            Box {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(scrollState)
+                ) {
+                    tableContent(widthModifier)
+                }
+
+                HorizontalTableScrollbar(
+                    scrollState = scrollState,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
+            }
+        } else {
+            tableContent(widthModifier)
         }
     }
 }
@@ -204,5 +267,11 @@ class RowsBuilderImpl : RowsBuilder {
         rows.add(RowBuilderImpl(content, modifier))
     }
 }
+
+@Composable
+internal expect fun HorizontalTableScrollbar(
+    scrollState: ScrollState,
+    modifier: Modifier = Modifier,
+)
 
 

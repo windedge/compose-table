@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
-import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import io.github.windedge.table.components.Divider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +25,8 @@ fun <T> BasicPaginatedDataTable(
     cellPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 5.dp),
     divider: @Composable ((rowIndex: Int) -> Unit)? = @Composable { Divider() },
     footer: @Composable (BoxScope.() -> Unit)? = null,
+    minTableWidth: Dp = 0.dp,
+    scrollable: Boolean = false,
     eachRow: PaginationRowBuilder.(T) -> Unit
 ) {
     val recordList = remember { mutableStateListOf<T>() }
@@ -36,7 +39,15 @@ fun <T> BasicPaginatedDataTable(
         }
     }
 
-    DataTable(columns, modifier, cellPadding, divider, footer) {
+    DataTable(
+        columns = columns,
+        modifier = modifier,
+        cellPadding = cellPadding,
+        divider = divider,
+        footer = footer,
+        minTableWidth = minTableWidth,
+        scrollable = scrollable,
+    ) {
         recordList.forEachIndexed { index, record ->
             PaginationRowBuilderImpl(index, this).apply { eachRow(record) }
         }

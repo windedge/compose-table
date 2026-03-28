@@ -105,11 +105,11 @@ kotlin {
 
 android {
     namespace = "compose.table.demo"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
 
         applicationId = "compose.table.demo.androidApp"
         versionCode = 1

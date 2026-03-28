@@ -99,6 +99,53 @@ PaginatedDataTable(
 }
 ```
 
+### Table width & horizontal scrolling
+
+`DataTable`, `BasicPaginatedDataTable`, and both Material bindings expose two optional parameters:
+
+- `minTableWidth: Dp = 0.dp` – sets a minimum width for the table so columns are not squeezed too narrow.
+- `scrollable: Boolean = false` – wraps the table in a horizontally scrollable container;
+on desktop a horizontal scrollbar is shown.
+
+With these two parameters you can control table width and horizontal scrolling directly from the
+existing APIs, without any extra wrapper composables. For a complete example, see the
+[sample app](./sample):
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import io.github.windedge.table.m3.PaginatedDataTable
+import io.github.windedge.table.rememberPaginationState
+
+val paginationState = rememberPaginationState(data.size, pageSize = 5)
+
+PaginatedDataTable(
+    columns = {
+        headerBackground {
+            Box(Modifier.background(colorScheme.primary))
+        }
+        column { Text("Column 1") }
+        column { Text("Column 2") }
+        column { Text("Column 3") }
+    },
+    paginationState = paginationState,
+    onPageChanged = {
+        data.chunked(it.pageSize)[it.pageIndex - 1]
+    },
+    modifier = Modifier.fillMaxWidth(),
+    minTableWidth = 960.dp,
+    scrollable = true,
+) { item: Map<String, String> ->
+    row {
+        cell { Text(item["Column 1"] ?: "") }
+        cell { Text(item["Column 2"] ?: "") }
+        cell { Text(item["Column 3"] ?: "") }
+    }
+}
+```
+
 Please check the [sample app](./sample) for a more detailed showcase.
 
 ## Known Issues
