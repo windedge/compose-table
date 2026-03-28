@@ -35,23 +35,17 @@ The publishing workflow for this project runs on the `macOS-latest` runner to su
    git push origin v0.1.9
    ```
 
-2. After pushing the tag, the `release.yml` workflow will be automatically triggered, which will:
+2. After pushing the tag, the `release.yml` workflow will be automatically triggered.
+
+3. The workflow will:
    - Extract the version number from the tag
    - Update the version in `gradle.properties`
-   - Create a GitHub Release
-
-3. After creating the Release, the `publish.yml` workflow will be automatically triggered, which will:
-   - Build the project (including the iOS platform)
-   - Sign the build artifacts using GPG
-   - Publish all artifacts to Maven Central using the `com.vanniktech.maven.publish` plugin 0.34.0 via the `publishToMavenCentral` task
+   - Build and publish all artifacts to Maven Central using the `com.vanniktech.maven.publish` plugin 0.34.0 via the `publishToMavenCentral` task
+   - Create a GitHub Release after the publish step succeeds
 
 ### Manual Publishing
 
-1. On the GitHub repository page, go to the "Actions" tab
-2. Select the "Publish to Maven Central" workflow
-3. Click the "Run workflow" button
-4. Select the branch to publish from the dropdown menu
-5. Click the "Run workflow" button to start the publishing process
+This repository now uses a tag-driven release workflow. To publish manually, create and push a version tag.
 
 ## Notes
 
