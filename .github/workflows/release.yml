@@ -78,8 +78,9 @@ jobs:
 
       - name: Create Release
         env:
-          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "v${{ steps.get_version.outputs.VERSION }}" \
+            --repo "${{ github.repository }}" \
             --title "Release ${{ steps.get_version.outputs.VERSION }}" \
             --notes "Release version ${{ steps.get_version.outputs.VERSION }}"
