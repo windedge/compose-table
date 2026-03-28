@@ -148,9 +148,28 @@ PaginatedDataTable(
 
 Please check the [sample app](./sample) for a more detailed showcase.
 
-## Known Issues
+## Version Compatibility
 
-Since the Compose Resources is relatively new and still under development, a bug in the WASM platform is causing the paginator icons to fail to load as expected.
+Below is a table showing the compatibility between Compose Table versions and the required toolchain:
+
+| Compose Table Version | Kotlin Version | Compose Multiplatform | Android Gradle Plugin |
+|-----------------------|----------------|------------------------|-----------------------|
+| `< 0.3.0`             | older toolchains | older toolchains     | AGP 8.x and earlier   |
+| `0.3.0+`              | `2.2.20+`      | `1.9.3+`              | `9.0.1+`              |
+
+Projects using older Kotlin or Compose versions may need to upgrade before consuming `0.3.0+`. If you are on an older toolchain, use a pre-`0.3.0` release instead.
+
+### Android Namespace Changes in `0.3.0+`
+
+Starting from version `0.3.0`, each Android artifact has a unique namespace to support AGP 9+:
+
+| Artifact | Android Namespace |
+|----------|-------------------|
+| `table` | `io.github.windedge.table` |
+| `table-m2` | `io.github.windedge.table.m2` |
+| `table-m3` | `io.github.windedge.table.m3` |
+
+If you reference Android `R` classes directly, update your imports accordingly. Kotlin API usage is unaffected.
 
 ## Credits
 

@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.LibraryExtension
 import com.github.gmazzo.gradle.plugins.BuildConfigExtension
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -34,12 +33,6 @@ subprojects {
 
             jvm()
 
-            plugins.withId("com.android.library") {
-                androidTarget {
-                    publishLibraryVariants("release")
-                }
-            }
-
             iosArm64()
             iosX64()
             iosSimulatorArm64()
@@ -72,26 +65,5 @@ subprojects {
             buildConfigField("String", "groupId", "\"$groupId\"")
             buildConfigField("String", "currentVersion", "\"$currentVersion\"")
         }
-
-
-        extensions.configure<JavaPluginExtension> {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
-
-        extensions.configure<LibraryExtension> {
-            compileSdk = 33
-            sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            defaultConfig {
-                minSdk = 21
-            }
-            compileOptions {
-                this.sourceCompatibility = JavaVersion.VERSION_17
-                this.targetCompatibility = JavaVersion.VERSION_17
-            }
-            namespace = "io.github.windedge.table"
-        }
-
-
     }
 }

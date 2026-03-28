@@ -7,6 +7,12 @@ plugins {
 }
 
 kotlin {
+    androidLibrary {
+        namespace = "io.github.windedge.table.m2"
+        compileSdk = 35
+        minSdk = 21
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
